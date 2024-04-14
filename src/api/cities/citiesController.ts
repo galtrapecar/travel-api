@@ -5,7 +5,12 @@ import { CitiesService } from "./citiesService";
 @Route("cities")
 export class CitiesController extends Controller {
   @Get()
-  public async getCity(@Query() name: string): Promise<City> {
+  public async getCity(@Query() name: string): Promise<City[]> {
     return new CitiesService().get(name);
+  }
+
+  @Get('/search')
+  public async searchCity(@Query() query: string): Promise<City[]> {
+    return new CitiesService().search(query);
   }
 }
