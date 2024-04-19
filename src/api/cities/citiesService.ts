@@ -28,8 +28,6 @@ export class CitiesService {
       );
       return res.rows;
     } catch (error) {
-      console.log(error);
-      
       return [];
     } finally {
       await client.end();
