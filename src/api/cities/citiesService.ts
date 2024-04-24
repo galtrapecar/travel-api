@@ -10,7 +10,38 @@ export class CitiesService {
         "SELECT * FROM cities WHERE city = $1 OR city_ascii = $1",
         [name]
       );
-      return res.rows;
+      return res.rows.map((city) => ({
+        ...city,
+        lat: parseFloat(city.lat),
+        lng: parseFloat(city.lng),
+      }));
+    } catch (error) {
+      return [];
+    } finally {
+      await client.end();
+    }
+  }
+
+  public async getInRadius(
+    lat: number,
+    lng: number,
+    radius?: number,
+    population?: number
+  ): Promise<City[]> {
+    if (!radius) radius = 400_000;
+    if (!population) population = 0;
+    const client = new Client();
+    try {
+      await client.connect();
+      const res = await client.query(
+        "SELECT DISTINCT * FROM cities WHERE (point(lng, lat) <@> point($2, $1)) < ($3 / 1609.344) AND population > $4",
+        [lat, lng, radius, population]
+      );
+      return res.rows.map((city) => ({
+        ...city,
+        lat: parseFloat(city.lat),
+        lng: parseFloat(city.lng),
+      }));
     } catch (error) {
       return [];
     } finally {
@@ -26,7 +57,11 @@ export class CitiesService {
         "SELECT * FROM cities WHERE LOWER(city) LIKE $1 OR LOWER(city_ascii) LIKE $1",
         [`%${query}%`]
       );
-      return res.rows;
+      return res.rows.map((city) => ({
+        ...city,
+        lat: parseFloat(city.lat),
+        lng: parseFloat(city.lng),
+      }));
     } catch (error) {
       return [];
     } finally {

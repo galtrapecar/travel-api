@@ -7,8 +7,10 @@
     "dev": "yarn run build && concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\""
   },
   "dependencies": {
+    "@types/duckduckgo-images-api": "^1.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "duckduckgo-images-api": "^1.0.5",
     "express": "^4.19.2",
     "joi": "^17.12.3",
     "pg": "^8.11.5",
