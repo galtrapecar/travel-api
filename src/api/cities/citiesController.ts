@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Middlewares, Query, Route } from "tsoa";
+import { Controller, Get, Middlewares, Query, Route } from "tsoa";
 import { City } from "./city";
 import { CitiesService } from "./citiesService";
 import { DuckDuckGoImage } from "duckduckgo-images-api";
@@ -32,7 +32,7 @@ export class CitiesController extends Controller {
   }
 
   @Get("/images")
-  // @Middlewares(cache('60 minutes'))
+  @Middlewares(cache('60 minutes'))
   public async getCityImages(
     @Query() query: string,
     @Query() count?: number
