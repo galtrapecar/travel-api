@@ -21,4 +21,24 @@ export class MonumentsService {
       await client.end();
     }
   }
+
+  public async getInCountry(iso2: string): Promise<Monument[]> {
+    const client = new Client();
+    try {
+      await client.connect();
+      const res = await client.query(
+        "SELECT * FROM monuments WHERE iso2 = $2",
+        [iso2]
+      );
+      return res.rows.map((monument) => ({
+        ...monument,
+        lat: parseFloat(monument.lat),
+        lng: parseFloat(monument.lng),
+      }));
+    } catch (error) {
+      return [];
+    } finally {
+      await client.end();
+    }
+  }
 }
