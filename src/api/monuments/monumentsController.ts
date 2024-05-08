@@ -5,8 +5,20 @@ import { MonumentsService } from "./monumentsService";
 @Route("monuments")
 export class MonumentsController {
   @Get()
-  public async get(@Query() iso2: string, @Query() city?: string): Promise<Monument[]> {
+  public async get(
+    @Query() iso2: string,
+    @Query() city?: string
+  ): Promise<Monument[]> {
     if (city) return new MonumentsService().get(city, iso2);
     return new MonumentsService().getInCountry(iso2);
+  }
+
+  @Get("/inRadius")
+  public async getInRadius(
+    @Query() lat: number,
+    @Query() lng: number,
+    @Query() radius?: number
+  ): Promise<Monument[]> {
+    return new MonumentsService().getInRadius(lat, lng, radius);
   }
 }

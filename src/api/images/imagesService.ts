@@ -6,8 +6,9 @@ export class ImagesService {
     await new Promise((r) => setTimeout(r, 2000));
     const url = `https://duckduckgo.com/i.js`;
     const vqd = await getVqdToken(query);
-    const response = await axios
-      .get(url, {
+
+    try {
+      const response = await axios.get(url, {
         params: {
           o: "json",
           q: query,
@@ -15,17 +16,18 @@ export class ImagesService {
           f: ",,,,,",
           p: 1,
         },
-      })
-      .catch((error) => {
-        console.log(error);
-        throw error;
       });
 
-    const data = response.data;
+      const data = response.data;
 
-    if (count) {
-      return data.results.slice(0, count);
+      if (count) {
+        return data.results.slice(0, count);
+      }
+      return [data.results[0]];
+    } catch (error) {
+      return {
+        message: error,
+      };
     }
-    return [data.results[0]];
   }
 }
