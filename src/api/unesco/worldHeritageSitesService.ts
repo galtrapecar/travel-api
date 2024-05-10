@@ -25,7 +25,7 @@ export class WorldHeritageSitesService {
   public async getInRadius(
     lat: number,
     lng: number,
-    radius: number = 60000
+    radius: number = 30000
   ): Promise<WorldHeritageSite[]> {
     const client = new Client();
     try {
