@@ -8,4 +8,5 @@ export interface City {
   lat: number;
   lng: number;
   population: number;
+  image_url: string | null;
 }
