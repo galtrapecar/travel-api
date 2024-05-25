@@ -1,13 +1,13 @@
 import { Client } from "pg";
-import { Monument } from "./monument";
+import { PointOfInterest } from "./poi";
 
-export class MonumentsService {
-  public async get(city: string, iso2: string): Promise<Monument[]> {
+export class PoisService {
+  public async get(city: string, iso2: string): Promise<PointOfInterest[]> {
     const client = new Client();
     try {
       await client.connect();
       const res = await client.query(
-        "SELECT * FROM monuments WHERE LOWER(location) LIKE $1 AND iso2 = $2",
+        "SELECT * FROM pois WHERE LOWER(location) LIKE $1 AND iso2 = $2",
         [`%${city}%`, iso2]
       );
       return res.rows.map((monument) => ({
@@ -22,12 +22,12 @@ export class MonumentsService {
     }
   }
 
-  public async getInCountry(iso2: string): Promise<Monument[]> {
+  public async getInCountry(iso2: string): Promise<PointOfInterest[]> {
     const client = new Client();
     try {
       await client.connect();
       const res = await client.query(
-        "SELECT * FROM monuments WHERE iso2 = $2",
+        "SELECT * FROM pois WHERE iso2 = $2",
         [iso2]
       );
       return res.rows.map((monument) => ({
@@ -45,13 +45,13 @@ export class MonumentsService {
   public async getInRadius(
     lat: number,
     lng: number,
-    radius: number = 40000
-  ): Promise<Monument[]> {
+    radius: number = 10000
+  ): Promise<PointOfInterest[]> {
     const client = new Client();
     try {
       await client.connect();
       const res = await client.query(
-        "SELECT DISTINCT * FROM monuments WHERE (point(lng, lat) <@> point($2, $1)) < ($3 / 1609.344)",
+        "SELECT DISTINCT * FROM pois WHERE (point(lng, lat) <@> point($2, $1)) < ($3 / 1609.344)",
         [lat, lng, radius]
       );
       return res.rows.map((monument) => ({

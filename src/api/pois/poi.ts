@@ -1,4 +1,4 @@
-export interface Monument {
+export interface PointOfInterest {
   id: string;
   name: string;
   name_ascii: string;
@@ -6,4 +6,5 @@ export interface Monument {
   lng: number;
   iso2: string;
   location: string;
+  type: "windmill" | "monument";
 }
