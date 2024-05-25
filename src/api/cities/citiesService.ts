@@ -49,6 +49,28 @@ export class CitiesService {
     }
   }
 
+  public async getClosestCity(lat: number, lng: number): Promise<City | undefined> {
+    const client = new Client();
+    try {
+      await client.connect();
+      const res = await client.query(
+        "SELECT * FROM cities ORDER BY (point(lng, lat) <@> point($2, $1)) LIMIT 1",
+        [lat, lng]
+      );
+      return res.rows
+        .map((city) => ({
+          ...city,
+          lat: parseFloat(city.lat),
+          lng: parseFloat(city.lng),
+        }))
+        .at(0);
+    } catch (error) {
+      return;
+    } finally {
+      await client.end();
+    }
+  }
+
   public async search(query: string): Promise<City[]> {
     const client = new Client();
     try {
