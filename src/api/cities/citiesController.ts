@@ -1,4 +1,4 @@
-import { Controller, Get, Middlewares, Query, Route } from "tsoa";
+import { Controller, Get, Query, Route } from "tsoa";
 import { City } from "./city";
 import { CitiesService } from "./citiesService";
 

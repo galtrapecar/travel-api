@@ -6,5 +6,18 @@ export interface PointOfInterest {
   lng: number;
   iso2: string;
   location: string;
-  type: "windmill" | "monument";
+  type:
+    | "bridge"
+    | "castle"
+    | "church"
+    | "historical_site"
+    | "monument"
+    | "mosque"
+    | "museum"
+    | "palace"
+    | "piece_of_art"
+    | "pyramid"
+    | "religious_site"
+    | "tower"
+    | "windmill";
 }
