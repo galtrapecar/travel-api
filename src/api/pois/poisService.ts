@@ -68,8 +68,6 @@ export class PoisService {
 
   public async getNearPolyline(polyline: string): Promise<PointOfInterest[]> {
     const decodedPolyline = decode(polyline);
-    console.log(decodedPolyline);
-
     const client = new Client();
     try {
       await client.connect();
@@ -86,7 +84,7 @@ export class PoisService {
         [
           decodedPolyline.map((latLng) => latLng[0]).slice(2, -2),
           decodedPolyline.map((latLng) => latLng[1]).slice(2, -2),
-          10_000,
+          15_000,
         ]
       );
       return res.rows.map((poi) => ({
