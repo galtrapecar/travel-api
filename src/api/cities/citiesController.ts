@@ -26,7 +26,10 @@ export class CitiesController extends Controller {
   }
 
   @Get("/closest")
-  public async getClosestCity(@Query() lat: number, @Query() lng: number): Promise<City | undefined> {
+  public async getClosestCity(
+    @Query() lat: number,
+    @Query() lng: number
+  ): Promise<City | undefined> {
     return new CitiesService().getClosestCity(lat, lng);
   }
 }

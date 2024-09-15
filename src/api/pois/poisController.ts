@@ -21,4 +21,11 @@ export class PoisController {
   ): Promise<PointOfInterest[]> {
     return new PoisService().getInRadius(lat, lng, radius);
   }
+
+  @Get("/nearPolyline")
+  public async getNearPolyline(
+    @Query() polyline: string
+  ): Promise<PointOfInterest[]> {
+    return new PoisService().getNearPolyline(polyline);
+  }
 }

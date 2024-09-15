@@ -34,7 +34,7 @@ export class CitiesService {
     try {
       await client.connect();
       const res = await client.query(
-        "SELECT DISTINCT * FROM cities WHERE (point(lng, lat) <@> point($2, $1)) < ($3 / 1609.344) AND population > $4",
+        "SELECT DISTINCT * FROM cities WHERE (point(lng, lat) <@> point($2, $1)) < ($3 / 1609.344) AND population > $4 ORDER BY population DESC",
         [lat, lng, radius, population]
       );
       return res.rows.map((city) => ({
@@ -49,7 +49,10 @@ export class CitiesService {
     }
   }
 
-  public async getClosestCity(lat: number, lng: number): Promise<City | undefined> {
+  public async getClosestCity(
+    lat: number,
+    lng: number
+  ): Promise<City | undefined> {
     const client = new Client();
     try {
       await client.connect();
@@ -85,6 +88,7 @@ export class CitiesService {
         lng: parseFloat(city.lng),
       }));
     } catch (error) {
+      console.log(error);
       return [];
     } finally {
       await client.end();
