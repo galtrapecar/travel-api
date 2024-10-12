@@ -1,3 +1,5 @@
+import { City } from "../cities/city";
+
 export interface PointOfInterest {
   id: string;
   name: string;
@@ -6,6 +8,7 @@ export interface PointOfInterest {
   lng: number;
   iso2: string;
   location: string;
+  city?: Partial<City>;
   type:
     | "bridge"
     | "castle"

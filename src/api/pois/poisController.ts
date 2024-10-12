@@ -17,15 +17,17 @@ export class PoisController {
   public async getInRadius(
     @Query() lat: number,
     @Query() lng: number,
-    @Query() radius?: number
+    @Query() radius?: number,
+    @Query() withCity?: boolean
   ): Promise<PointOfInterest[]> {
-    return new PoisService().getInRadius(lat, lng, radius);
+    return new PoisService().getInRadius(lat, lng, radius, withCity);
   }
 
   @Get("/nearPolyline")
   public async getNearPolyline(
-    @Query() polyline: string
+    @Query() polyline: string,
+    @Query() withCity?: boolean
   ): Promise<PointOfInterest[]> {
-    return new PoisService().getNearPolyline(polyline);
+    return new PoisService().getNearPolyline(polyline, withCity);
   }
 }
