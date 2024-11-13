@@ -7,7 +7,7 @@
     "target": "es2017",
     "outDir": ".build",
     "moduleResolution": "node",
-    "lib": ["es2017"],
+    "lib": ["es2016", "DOM"],
     "rootDir": "./",
     "strict": true,
     "module": "commonjs",

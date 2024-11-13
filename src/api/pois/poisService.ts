@@ -172,4 +172,23 @@ export class PoisService {
       await client.end();
     }
   }
+
+  public async getSloChurches(): Promise<
+    { name: string; lat: number; lng: number }[]
+  > {
+    const client = new Client();
+    try {
+      await client.connect();
+      const res = await client.query("SELECT * FROM slo_churches");
+      return res.rows.map((poi) => ({
+        ...poi,
+        lat: parseFloat(poi.lat),
+        lng: parseFloat(poi.lng),
+      }));
+    } catch (error) {
+      return [];
+    } finally {
+      await client.end();
+    }
+  }
 }

@@ -30,4 +30,11 @@ export class PoisController {
   ): Promise<PointOfInterest[]> {
     return new PoisService().getNearPolyline(polyline, withCity);
   }
+
+  @Get("/church")
+  public async getSloChurches(): Promise<
+    { name: string; lat: number; lng: number }[]
+  > {
+    return new PoisService().getSloChurches();
+  }
 }
